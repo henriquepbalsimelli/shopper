@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #id{
+            display: none;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <form action='/pedido/2' method="POST">
+        <label> Insira seu nome
+            <input type="text" name='nomeCliente'>
+        </label>
+        <label> Insira a data de entrega
+            <input type="date" name='dataDeEntrega'>
+        </label>
+        <button type="submit">Enviar pedido</button>
+        <h2>Selecione a quantidade desejada de cada produto</h2>
+
+        <ul>
+            <%for (const produto of produtos){%>
+                <div>
+                    <label for='produto'><%=produto.name%>
+                        <input type="number"  name='quantidade' id='<%=produto.id%>' value="0"></input>
+                        <input type="number" name='produtoId' id='id' value='<%=produto.id%>'>
+                    </label>
+                    
+                </div>
+                <div>
+                    <!--<input type='number' name='quantidade' min="0" value="0">-->
+                </div>
+                <%}%>
+        </ul>
+        <button type="submit">Enviar pedido</button>
+    </form>
+</body>
+
+</html>
