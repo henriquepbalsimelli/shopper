@@ -1,9 +1,13 @@
+const { Op } = require('sequelize');
 const models = require('../models');
 
 module.exports.renderizaForm = (async(req,res,next) =>{
     const produtos = await models.Produtos.findAll()
-    const ultimoPedido = await models.Pedidos.findOne({
-        where:{},
+    const [ultimoPedido, created] = await models.Pedidos.findOrCreate({
+        where:{
+           nomeCliente: 'create',
+           dataDeEntrega: '2021-08-25 00:00:00'
+        },
         order:[['id', 'DESC']]
     })
     
@@ -40,4 +44,30 @@ module.exports.enviaPedido = (async(req,res,next)=>{
 
     
     
+})
+
+module.exports.renderizaPedidos = (async(req,res,next)=>{
+    const idPedido = req.params.idPedido
+    //console.log(idPedido)
+    const pedidos = await models.Pedidos.findAll()
+    
+    res.render('meusPedidos', {
+        pedidos: pedidos
+    })
+})
+
+module.exports.cancelaPedido = (async (req, res, next) => {
+    const id = req.params.id
+    await models.Pedidos.destroy({
+        where: {
+            id: id
+        }
+    })
+    await models.Pedidos_produtos.destroy({
+        where: {
+            pedidoId: id
+        }
+    })
+    res.redirect('/')
+
 })

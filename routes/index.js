@@ -1,15 +1,19 @@
 var express = require('express');
 var router = express.Router();
-const {renderizaForm, enviaPedido} = require('../controllers/pedidosController')
+const {renderizaForm, enviaPedido, renderizaPedidos, cancelaPedido} = require('../controllers/pedidosController')
 
 /* GET home page. */
-router.get('/:id', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 
 
-router.get('/pedido/:id', renderizaForm)
-router.post('/pedido/:id', enviaPedido)
+router.get('/pedido/', renderizaForm)
+router.post('/pedido/', enviaPedido)
 
+router.get('/meusPedidos/:idPedido?', renderizaPedidos)
+router.get('/meusPedidos/:idPedido')
+
+router.get('/cancelaPedido/:id', cancelaPedido)
 module.exports = router;
