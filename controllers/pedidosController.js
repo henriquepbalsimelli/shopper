@@ -99,9 +99,11 @@ module.exports.renderizaItensPedidos = (async (req, res, next) => {
     
     const produtos = await models.Pedidos_produtos.findAll({
         where: {
+            pedidoId:idPedido,
             quantidade: {
                 [Op.ne]: 0
-            }
+            },
+            
         },
         include: [
             {

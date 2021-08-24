@@ -2,14 +2,12 @@
     <% for (const produto of produtos){%>
         <li>
             <div>
-                Produto: <%=produto.produtoId%>
+                Produto: <%=produto.produto.name%>
             </div>
             <div>
                 Quantidade: <%=produto.quantidade%>
             </div>
-            <div>
-                Quantidade: <%=produto.produto.name%>
-            </div>
+            
             
         </li>
     <%}%>
