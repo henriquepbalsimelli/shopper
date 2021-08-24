@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        include:[
+        /*include:[
             {associate: 'produtos'},
             {associate:'pedidos'}
-        ]
+        ]*/
 
     }, {
         sequelize,

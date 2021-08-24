@@ -1,6 +1,15 @@
 <ul>
     <% for (const produto of produtos){%>
-        <li><%=produto.name%></li>
+        <li>
+            <div>
+                Produto: <%=produto.produtoId%>
+            </div>
+            <div>
+                Quantidade: <%=produto.quantidade%>
+            </div>
+            
+            
+        </li>
     <%}%>
 </ul>
 
