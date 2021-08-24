@@ -12,7 +12,8 @@ module.exports = {
         type:Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
+        allowNull: false,
+        
       },
       nomeCliente:{
         type: Sequelize.STRING,

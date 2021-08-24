@@ -16,4 +16,6 @@ router.get('/meusPedidos/:idPedido?', renderizaPedidos)
 router.get('/meusPedidos/:idPedido')
 
 router.get('/cancelaPedido/:id', cancelaPedido)
+
+router.get('/itensPedido/:id')
 module.exports = router;

@@ -11,6 +11,8 @@ module.exports.renderizaForm = (async(req,res,next) =>{
         order:[['id', 'DESC']]
     })
     
+    
+    
     res.render('formCadastro', {
         produtos: produtos,
         pedidos: ultimoPedido
@@ -42,7 +44,7 @@ module.exports.enviaPedido = (async(req,res,next)=>{
     
     
 
-    
+    res.redirect('/')
     
 })
 
