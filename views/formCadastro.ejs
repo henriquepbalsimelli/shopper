@@ -21,6 +21,9 @@
         <label> Insira a data de entrega
             <input type="date" name='dataDeEntrega'>
         </label>
+        <div>
+            <input type='number' name='pedidoId' value='<%=(pedidos.id + 1)%>' readonly>
+        </div>
         <button type="submit">Enviar pedido</button>
         <h2>Selecione a quantidade desejada de cada produto</h2>
 
