@@ -21,10 +21,15 @@
                     <h3>Nome do cliente:</h3>
                     <%=pedido.nomeCliente%>
                 </div>
+                <form method="GET" action='/meusPedidos/<%=pedido.id%>/itens'>
+                    <button type="submit">Ver produtos deste pedido</button> 
+                </form>
                 <form method="GET" action='/cancelaPedido/<%=pedido.id%>'>
                     <button type="submit">Cancelar pedido</button> 
                 </form>
-
+                <form method="GET" action='/alterarPedido/<%=pedido.id%>'>
+                    <button type="submit">Alterar pedido</button> 
+                </form>
             </li>
             <%}%>
     </ul>

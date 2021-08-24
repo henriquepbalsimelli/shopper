@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
-const {renderizaForm, enviaPedido, renderizaPedidos, cancelaPedido} = require('../controllers/pedidosController')
+const {
+  renderizaForm, 
+  enviaPedido, 
+  renderizaPedidos, 
+  cancelaPedido, 
+  alteraPedido,
+  renderizaItensPedidos} = require('../controllers/pedidosController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,10 +18,11 @@ router.get('/', function(req, res, next) {
 router.get('/pedido/', renderizaForm)
 router.post('/pedido/', enviaPedido)
 
-router.get('/meusPedidos/:idPedido?', renderizaPedidos)
-router.get('/meusPedidos/:idPedido')
+router.get('/meusPedidos/', renderizaPedidos)
+router.get('/meusPedidos/:idPedido/itens', renderizaItensPedidos)
 
 router.get('/cancelaPedido/:id', cancelaPedido)
 
-router.get('/itensPedido/:id')
+router.get('/alterarPedido/:id', alteraPedido)
+
 module.exports = router;

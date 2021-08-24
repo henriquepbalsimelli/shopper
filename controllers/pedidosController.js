@@ -8,14 +8,18 @@ module.exports.renderizaForm = (async(req,res,next) =>{
            nomeCliente: 'create',
            dataDeEntrega: '2021-08-25 00:00:00'
         },
+        
+    })
+    
+    const pedido = await models.Pedidos.findOne({
+        limit: 1,
         order:[['id', 'DESC']]
     })
     
-    
-    
     res.render('formCadastro', {
         produtos: produtos,
-        pedidos: ultimoPedido
+        pedidos: ultimoPedido,
+        pedido: pedido
     })
 })
 
@@ -53,8 +57,11 @@ module.exports.renderizaPedidos = (async(req,res,next)=>{
     //console.log(idPedido)
     const pedidos = await models.Pedidos.findAll()
     
+    
+
     res.render('meusPedidos', {
-        pedidos: pedidos
+        pedidos: pedidos,
+        
     })
 })
 
@@ -72,4 +79,17 @@ module.exports.cancelaPedido = (async (req, res, next) => {
     })
     res.redirect('/')
 
+})
+
+module.exports.alteraPedido = (async(req,res,next)=>{
+
+})
+
+module.exports.renderizaItensPedidos = (async(req,res,next)=>{
+    const idPedido = req.params.idPedido
+    const produtos = await models.Pedidos_produtos.findAll()
+    console.log(produtos)
+    res.render('itensPedidos', {
+        produtos:produtos
+    })
 })
