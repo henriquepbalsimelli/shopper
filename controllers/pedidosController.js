@@ -1,3 +1,4 @@
+const { name } = require('ejs');
 const { Op } = require('sequelize');
 const models = require('../models');
 
@@ -23,10 +24,10 @@ module.exports.renderizaForm = (async (req, res, next) => {
         order: [['id', 'DESC']]
     })
 
-    console.log(pedido)
+
     res.render('formCadastro', {
         produtos: produtos,
-        
+
         pedido: pedido
     })
 })
@@ -95,22 +96,39 @@ module.exports.alteraPedido = (async (req, res, next) => {
 
 module.exports.renderizaItensPedidos = (async (req, res, next) => {
     const idPedido = req.params.idPedido
+    
     const produtos = await models.Pedidos_produtos.findAll({
         where: {
             quantidade: {
                 [Op.ne]: 0
             }
-        }
+        },
+        include: [
+            {
+                association: 'produto',
+                trough:{
+                    attributes:[]
+                }
+            }
+        ]
     })
-    /*const item = await models.Produtos.findAll({
+    
+    const name = produtos.produto
+    /*console.log(produtos.produto)
+    for(const produto of produtos){
+        console.log(produto.produto)
+    }*/
+    console.log(produtos.name)
+    
+    /*const nomeItem = await models.Produtos.findAll({
         where:{
-            idprodutos
+            id: produtos.id
         }
     })*/
 
-    const { idprodutos } = produtos
 
-    console.log(idprodutos)
+
+
     res.render('itensPedidos', {
         produtos: produtos
     })
