@@ -110,7 +110,7 @@ module.exports.renderizaItensPedidos = (async (req, res, next) => {
 
     const { idprodutos } = produtos
 
-    console.log(idprodutos.produtoId)
+    console.log(idprodutos)
     res.render('itensPedidos', {
         produtos: produtos
     })
