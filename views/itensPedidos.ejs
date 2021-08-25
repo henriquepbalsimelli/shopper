@@ -7,7 +7,9 @@
             <div>
                 Quantidade: <%=produto.quantidade%>
             </div>
-            
+            <form method="GET" action='/cancelaItem/<%=produto.pedidoId%>/<%=produto.produtoId%>'>
+                <button type="submit">Apagar produto</button> 
+            </form>
             
         </li>
     <%}%>

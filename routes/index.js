@@ -6,7 +6,8 @@ const {
   renderizaPedidos, 
   cancelaPedido, 
   alteraPedido,
-  renderizaItensPedidos} = require('../controllers/pedidosController')
+  renderizaItensPedidos,
+  cancelaItem} = require('../controllers/pedidosController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,12 +17,14 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/pedido/', renderizaForm)
+
 router.post('/pedido/', enviaPedido)
-
 router.get('/meusPedidos/', renderizaPedidos)
-router.get('/meusPedidos/:idPedido/itens', renderizaItensPedidos)
 
-router.get('/cancelaPedido/:id', cancelaPedido)
+router.get('/meusPedidos/:idPedido/itens', renderizaItensPedidos)
+router.get('/cancelaItem/:id/:idItem', cancelaItem)
+
+router.get('/cancelaPedido/:id/:idProduto', cancelaPedido)
 
 router.get('/alterarPedido/:id', alteraPedido)
 

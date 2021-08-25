@@ -115,23 +115,24 @@ module.exports.renderizaItensPedidos = (async (req, res, next) => {
         ]
     })
     
-    const name = produtos.produto
-    /*console.log(produtos.produto)
-    for(const produto of produtos){
-        console.log(produto.produto)
-    }*/
-    console.log(produtos.name)
-    
-    /*const nomeItem = await models.Produtos.findAll({
-        where:{
-            id: produtos.id
-        }
-    })*/
-
-
-
-
     res.render('itensPedidos', {
         produtos: produtos
     })
+})
+
+module.exports.cancelaItem = (async (req, res, next) => {
+    console.log('cancelou')
+    const id  = req.params.id
+    const idItem = req.params.idItem
+    console.log(id)
+    console.log(idItem)
+    //console.log(idItem)
+    await models.Pedidos_produtos.destroy({
+        where: {
+            pedidoId:id,
+            produtoId: idItem
+        }
+        ///meusPedidos/:idPedido/cancelaItem/:produtoId
+    })
+    res.redirect('/meusPedidos')
 })
