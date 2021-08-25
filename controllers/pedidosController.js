@@ -36,8 +36,17 @@ module.exports.enviaPedido = (async (req, res, next) => {
     const produtos = await models.Produtos.findAll()
 
     const informacoes = req.body
+    const valores = req.body.preco
+    const numberList = []
+    
+    for (let i = 0; i<valores.length; i++){
+        const valorTotal =(parseFloat(req.body.preco[i]))*(parseFloat(req.body.quantidade[i]))
+        numberList.push(parseFloat(valorTotal))
 
-    await models.Pedidos.create({
+    }
+    const total = numberList.reduce((total, currentElement)=> total+ currentElement)
+    console.log(total)
+    /*await models.Pedidos.create({
         nomeCliente: req.body.nomeCliente,
         dataDeEntrega: req.body.dataDeEntrega
     })
@@ -57,7 +66,7 @@ module.exports.enviaPedido = (async (req, res, next) => {
 
 
 
-    res.redirect('/')
+    res.redirect('/')*/
 
 })
 

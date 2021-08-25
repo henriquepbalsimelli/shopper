@@ -6,8 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #id{
+        #id {
             display: none;
+        }
+
+        #cardProduto {
+            margin: 2rem
         }
     </style>
     <title>Document</title>
@@ -15,32 +19,45 @@
 
 <body>
     <form action='/pedido' method="POST">
-        <label> Insira seu nome
-            <input type="text" name='nomeCliente'>
-        </label>
-        <label> Insira a data de entrega
-            <input type="date" name='dataDeEntrega'>
-        </label>
-       
-            <div>
-                <input type='number' name='pedidoId' value='<%=(pedido.id + 1)%>' readonly>
-            </div>
-            
+        <div>
+            <label for='nome'> Insira seu nome
+                <input type="text" name='nomeCliente' id='nome'>
+            </label>
+        </div>
+        <div>
+            <label for='dataDeEntrega'> Insira a data de entrega
+                <input type="date" name='dataDeEntrega' id='dataDeEntrega'>
+            </label>
+        </div>
+
+
+        <div>
+            <input type='number' name='pedidoId' value='<%=(pedido.id + 1)%>' readonly id='id'>
+        </div>
+
         <button type="submit">Enviar pedido</button>
         <h2>Selecione a quantidade desejada de cada produto</h2>
 
         <ul>
             <%for (const produto of produtos){%>
-                <div>
-                    <label for='produto'><%=produto.name%>
-                        <input type="number"  name='quantidade' id='<%=produto.id%>' value="0"></input>
+                <div id='cardProduto'>
+                    <label for='produto'>
+                        <div id='produto'>
+                            <%=produto.name%>
+                        </div>
+                        <input type="number" name='quantidade' id='<%=produto.id%>' value="0"
+                            max='<%=produto.qty_stock%>'></input>
                         <input type="number" name='produtoId' id='id' value='<%=produto.id%>'>
                     </label>
-                    
+                    <div>
+                        Quantidade em estoque: <%=produto.qty_stock%>
+                    </div>
+                    <div>
+                        Valor unitário: R$<%=produto.price%>
+                        <input type='number' name='preco' value='<%=produto.price%>' readonly id='id'>
+                    </div>
                 </div>
-                <div>
-                    <!--<input type='number' name='quantidade' min="0" value="0">-->
-                </div>
+                
                 <%}%>
         </ul>
         <button type="submit">Enviar pedido</button>
