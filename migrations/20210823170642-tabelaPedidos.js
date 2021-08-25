@@ -22,6 +22,9 @@ module.exports = {
       dataDeEntrega:{
         type: Sequelize.DATE
       },
+      total:{
+        type: Sequelize.FLOAT
+      },
       createdAt:{
         type:Sequelize.DATE,
         allowNull: false,

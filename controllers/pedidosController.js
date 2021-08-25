@@ -46,9 +46,10 @@ module.exports.enviaPedido = (async (req, res, next) => {
     }
     const total = numberList.reduce((total, currentElement)=> total+ currentElement)
     console.log(total)
-    /*await models.Pedidos.create({
+    await models.Pedidos.create({
         nomeCliente: req.body.nomeCliente,
-        dataDeEntrega: req.body.dataDeEntrega
+        dataDeEntrega: req.body.dataDeEntrega,
+        total: total
     })
 
 
@@ -66,7 +67,7 @@ module.exports.enviaPedido = (async (req, res, next) => {
 
 
 
-    res.redirect('/')*/
+    res.redirect('/')
 
 })
 
