@@ -7,7 +7,9 @@ const {
   cancelaPedido, 
   alteraPedido,
   renderizaItensPedidos,
-  cancelaItem} = require('../controllers/pedidosController')
+  cancelaItem,
+  renderizaFormAlteracao,
+  enviaFormAtualizacao} = require('../controllers/pedidosController')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,6 +28,7 @@ router.get('/cancelaItem/:id/:idItem', cancelaItem)
 
 router.get('/cancelaPedido/:id/:idProduto', cancelaPedido)
 
-router.get('/alterarPedido/:id', alteraPedido)
+router.get('/alterarPedido/:id', renderizaFormAlteracao)
+router.post('/alteraFormAtu', enviaFormAtualizacao)
 
 module.exports = router;

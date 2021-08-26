@@ -15,22 +15,30 @@
         <% for (const pedido of pedidos){%>
             <li>
                 <div>
-                    <h3>Numero do pedido:</h3>
-                    <%=pedido.id%>
+                    <h3>Numero do pedido: <%=pedido.id%> </h3>
+                    
                 </div>
                 <div>
-                    <h3>Nome do cliente:</h3>
-                    <%=pedido.nomeCliente%>
+                    <h3>Nome do cliente: <%=pedido.nomeCliente%></h3>
+                    
                 </div>
-                <form method="GET" action='/meusPedidos/<%=pedido.id%>/itens'>
-                    <button type="submit">Ver produtos deste pedido</button> 
-                </form>
-                <form method="GET" action='/cancelaPedido/<%=pedido.id%>'>
-                    <button type="submit">Cancelar pedido</button> 
-                </form>
-                <form method="GET" action='/alterarPedido/<%=pedido.id%>'>
-                    <button type="submit">Alterar pedido</button> 
-                </form>
+                <div>
+                    <h3>Valor total do pedido: R$<%=pedido.total%></h3>
+                    
+                </div>
+                <div>
+                    <form method="GET" action='/meusPedidos/<%=pedido.id%>/itens'>
+                        <button type="submit">Ver produtos deste pedido</button>
+                    </form>
+                    <form method="GET" action='/cancelaPedido/<%=pedido.id%>'>
+                        <button type="submit">Cancelar pedido</button>
+                    </form>
+                    <form method="GET" action='/alterarPedido/<%=pedido.id%>'>
+                        <button type="submit">Alterar pedido</button>
+                    </form>
+
+                </div>
+
             </li>
             <%}%>
     </ul>

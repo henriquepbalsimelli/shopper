@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #id {
+            display: none;
+        }
+
+        #cardProduto {
+            margin: 2rem
+        }
+    </style>
+    <title>Alterar Pedido</title>
+</head>
+
+<body>
+    <form action='/alteraFormAtu' method="POST">
+        <div>
+            <label for='nome'> Nome cadastrado:
+                <input type="text" name='nomeCliente' id='nome' value='<%=infos.pedido.nomeCliente%>'>
+            </label>
+        </div>
+        <div>
+            <label for='dataDeEntrega'> Insira a data de entrega
+                <input type="date" name='dataDeEntrega' id='dataDeEntrega' value='<%=infos.pedido.dataDeEntrega%>'>
+            </label>
+        </div>
+
+
+        <div>
+            <input type='number' name='pedidoId' value='<%=infos.pedido.id%>' readonly id='id'>
+        </div>
+
+        <button type="submit">Atualizar pedido</button>
+        <h2>Atualize seu pedido</h2>
+
+        <ul>
+            <%for (const infoItem of infosItens){%>
+                <div id='cardProduto'>
+                    <label for='produto'>
+                        <div id='produto'>
+                            <%=infoItem.produto.name%>
+                        </div>
+                        
+                        <input type="number" name='quantidade' id='<%=infoItem.produto.id%>' value="0"
+                            max='<%=infoItem.produto.qty_stock%>'></input>
+                       
+                        <input type="number" name='produtoId' id='id' value='<%=infoItem.produto.id%>'>
+                    </label>
+                    <div>
+                        Quantidade em estoque: <%=infoItem.produto.qty_stock%>
+                    </div>
+                    <div>
+                        Valor unitário: R$<%=infoItem.produto.price%>
+                        <input type='number' name='preco' value='<%=infoItem.produto.price%>' readonly id='id'>
+                    </div>
+                </div>
+                
+                <%}%>
+        </ul>
+        <button type="submit">Enviar pedido</button>
+    </form>
+</body>
+
+</html>
