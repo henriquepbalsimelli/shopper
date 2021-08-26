@@ -26,7 +26,7 @@ router.get('/meusPedidos/', renderizaPedidos)
 router.get('/meusPedidos/:idPedido/itens', renderizaItensPedidos)
 router.get('/cancelaItem/:id/:idItem', cancelaItem)
 
-router.get('/cancelaPedido/:id/:idProduto', cancelaPedido)
+router.get('/cancelaPedido/:id', cancelaPedido)
 
 router.get('/alterarPedido/:id', renderizaFormAlteracao)
 router.post('/alteraFormAtu', enviaFormAtualizacao)
