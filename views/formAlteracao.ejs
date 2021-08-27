@@ -32,7 +32,7 @@
 
 
         <div>
-            <input type='number' name='pedidoId' value='<%=infos.pedido.id%>' readonly id='id'>
+            <input type='number' name='pedidoId' value='<%=infos.pedido.id%>' readonly >
         </div>
 
         <button type="submit">Atualizar pedido</button>
@@ -46,7 +46,7 @@
                             <%=infoItem.produto.name%>
                         </div>
                         
-                        <input type="number" name='quantidade' id='<%=infoItem.produto.id%>' value="0"
+                        <input type="number" name='quantidade' id='<%=infoItem.produto.id%>' value="<%=infoItem.quantidade%>"
                             max='<%=infoItem.produto.qty_stock%>'></input>
                        
                         <input type="number" name='produtoId' id='id' value='<%=infoItem.produto.id%>'>

@@ -179,7 +179,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
 
 
-    await models.Pedidos.create({
+    await models.Pedidos.update({
         nomeCliente: nomeCliente,
         dataDeEntrega: dataDeEntrega,
         total: total
@@ -195,7 +195,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
 
     for (var i = 0; i < quantidade.length; i++) {
-        await models.Pedidos_produtos.create(
+        await models.Pedidos_produtos.update(
             {
                 pedidoId: id,
                 produtoId: produtoId[i],
@@ -311,10 +311,7 @@ module.exports.cancelaItem = (async (req, res, next) => {
     }
     const total = numberList.reduce((total, currentElement) => total + currentElement)
 
-    console.log(quantidades)
-    console.log(precos)
-    console.log(numberList)
-    console.log(total)
+    
 
     await models.Pedidos.update({
         total: total
