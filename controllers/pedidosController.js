@@ -81,7 +81,7 @@ module.exports.enviaPedido = (async (req, res, next) => {
 module.exports.renderizaPedidos = (async (req, res, next) => {
     const idPedido = req.params.idPedido
     //console.log(idPedido)
-    const pedidos = await models.Pedidos.findAll()
+    const pedidos = await models.Pedidos.findAll({})
 
 
 
@@ -104,7 +104,7 @@ module.exports.cancelaPedido = (async (req, res, next) => {
         }
     })
 
-    
+
 
 
     res.redirect('/')
@@ -130,7 +130,7 @@ module.exports.renderizaFormAlteracao = (async (req, res, next) => {
         }]
     })
 
-    
+
     const infosItens = await models.Pedidos_produtos.findAll({
         where: {
             pedidoId: pedidoId
@@ -148,7 +148,7 @@ module.exports.renderizaFormAlteracao = (async (req, res, next) => {
         }]
     })
 
-    
+
 
     res.render('formAlteracao', {
 
@@ -167,7 +167,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     const dataDeEntrega = req.body.dataDeEntrega
     const produtoId = req.body.produtoId
     const quantidade = req.body.quantidade
-    
+
 
     for (let i = 0; i < valores.length; i++) {
         const valorTotal = (parseFloat(req.body.preco[i])) * (parseFloat(req.body.quantidade[i]))
@@ -176,9 +176,9 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     }
     const total = numberList.reduce((total, currentElement) => total + currentElement)
     console.log(total)
-    
 
-    
+
+
     await models.Pedidos.create({
         nomeCliente: nomeCliente,
         dataDeEntrega: dataDeEntrega,
@@ -190,14 +190,14 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     })
 
 
-    
-    
-   
+
+
+
 
     for (var i = 0; i < quantidade.length; i++) {
-         await models.Pedidos_produtos.create(
+        await models.Pedidos_produtos.create(
             {
-                pedidoId:id,
+                pedidoId: id,
                 produtoId: produtoId[i],
                 quantidade: quantidade[i]
             },
@@ -264,30 +264,55 @@ module.exports.renderizaItensPedidos = (async (req, res, next) => {
 })
 
 module.exports.cancelaItem = (async (req, res, next) => {
-    console.log('cancelou')
+
     const id = req.params.id
     const idItem = req.params.idItem
-    console.log(id)
-    console.log(idItem)
+
     //console.log(idItem)
-    /*await models.Pedidos_produtos.destroy({
-        where: {
-            pedidoId: id,
+    await models.Pedidos_produtos.setDataValue({
+        key: quantidade,
+        value: 0,
+        where:{
             produtoId: idItem
         }
         ///meusPedidos/:idPedido/cancelaItem/:produtoId
-    })*/
-
-    const infos = await models.Pedidos_produtos.findAll({
-        where:{
-            pedidoId: id,
-            quantidade:{[Op.ne]:0}
-        }
     })
 
-    const idProdutos = infos
-    console.log(idProdutos)
-    
+    const infos = await models.Pedidos_produtos.findAll({
+        where: {
+            pedidoId: id,
+            
+        },
+        include: [
+            {
+                association: 'produto',
+                trough: {
+                    attributes: []
+                }
+            }
+        ]
+    })
+    const valores = await models.Produtos.findAll({
+
+    })
+
+    const quantidades = []
+    const precos =[]
+    const numberList =[]
+
+    for (let i = 0; i < infos.length; i++) {
+
+        quantidades.push(infos[i].quantidade)
+        precos.push(valores[i].price)
+        numberList.push(valores[i].price*infos[i].quantidade)
+    }
+    const total = numberList.reduce((total, currentElement) => total + currentElement)
+
+    console.log(quantidades)
+    console.log(precos)
+    console.log(numberList)
+    console.log(total)
+
     //console.log(valores)
 
     res.redirect('/meusPedidos')
