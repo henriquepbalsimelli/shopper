@@ -63,15 +63,7 @@ module.exports.enviaPedido = (async (req, res, next) => {
 
     }
 
-    //const pedidosProdutos = models.Pedidos_produtos
-
-    /*pedidosProdutos.afterCreate('debitaQuantidadeEstoque', async pedidosProdutos => {
-        models.Produtos.decrement({
-
-        }, {
-
-        })
-    })*/
+    
 
 
     res.redirect('/')
@@ -104,6 +96,7 @@ module.exports.cancelaPedido = (async (req, res, next) => {
         }
     })
 
+     
 
 
 
@@ -168,18 +161,23 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     const produtoId = req.body.produtoId
     const quantidade = req.body.quantidade
 
-
+    //console.log(informacoes)
+    //console.log(informacoes)
     for (let i = 0; i < valores.length; i++) {
         const valorTotal = (parseFloat(req.body.preco[i])) * (parseFloat(req.body.quantidade[i]))
         numberList.push(parseFloat(valorTotal))
 
     }
     const total = numberList.reduce((total, currentElement) => total + currentElement)
-    console.log(total)
+    //console.log(total)
 
+    const quantidadesDeRetorno = await models.Pedidos_produtos.findAll({
+        where:{
+            pedidoId: id
+        }
+    })
 
-
-    await models.Pedidos.update({
+    /*await models.Pedidos.update({
         nomeCliente: nomeCliente,
         dataDeEntrega: dataDeEntrega,
         total: total
@@ -187,30 +185,35 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
         where: {
             id: id
         }
-    })
-
-
-
-
+    })*/
 
 
     for (var i = 0; i < quantidade.length; i++) {
-        await models.Pedidos_produtos.update(
+        /*models.Pedidos_produtos.update(
             {
-                pedidoId: id,
-                produtoId: produtoId[i],
-                quantidade: quantidade[i]
+                pedidoId: parseInt(id[i]),
+                produtoId: parseInt(produtoId[i]),
+                quantidade: parseInt(quantidade[i])
             },
             {
                 where: {
-                    pedidoId: id
+                    pedidoId: parseInt(id)
                 }
             }
 
 
-        )
+        )*/
+        
+        await models.Produtos.increment({
+            qty_stock: quantidadesDeRetorno[i].quantidade
+        },{
+            where:{
+                id: produtoId[i]
+            }
+        })
+        //console.log(quantidadesDeRetorno[i].quantidade)
 
-        models.Produtos.decrement({
+        await models.Produtos.decrement({
             qty_stock: quantidade[i]
         }, {
             where: {
@@ -223,13 +226,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
     //const pedidosProdutos = models.Pedidos_produtos
 
-    /*pedidosProdutos.afterCreate('debitaQuantidadeEstoque', async pedidosProdutos => {
-        models.Produtos.decrement({
-
-        }, {
-
-        })
-    })*/
+    
 
 
     res.redirect('/')
