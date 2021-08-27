@@ -269,19 +269,22 @@ module.exports.cancelaItem = (async (req, res, next) => {
     const idItem = req.params.idItem
 
     //console.log(idItem)
-    await models.Pedidos_produtos.setDataValue({
-        key: quantidade,
-        value: 0,
-        where:{
-            produtoId: idItem
+    await models.Pedidos_produtos.update({
+        quantidade: 0
+    },
+        {
+            where: {
+                produtoId: idItem
+            }
         }
-        ///meusPedidos/:idPedido/cancelaItem/:produtoId
-    })
+
+    )
+    
 
     const infos = await models.Pedidos_produtos.findAll({
         where: {
             pedidoId: id,
-            
+
         },
         include: [
             {
@@ -297,14 +300,14 @@ module.exports.cancelaItem = (async (req, res, next) => {
     })
 
     const quantidades = []
-    const precos =[]
-    const numberList =[]
+    const precos = []
+    const numberList = []
 
     for (let i = 0; i < infos.length; i++) {
 
         quantidades.push(infos[i].quantidade)
         precos.push(valores[i].price)
-        numberList.push(valores[i].price*infos[i].quantidade)
+        numberList.push(valores[i].price * infos[i].quantidade)
     }
     const total = numberList.reduce((total, currentElement) => total + currentElement)
 
@@ -313,6 +316,15 @@ module.exports.cancelaItem = (async (req, res, next) => {
     console.log(numberList)
     console.log(total)
 
+    await models.Pedidos.update({
+        total: total
+    },
+    {
+        where:{
+            id:id
+        }
+    }
+)
     //console.log(valores)
 
     res.redirect('/meusPedidos')
