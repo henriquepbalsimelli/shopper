@@ -10,6 +10,7 @@ const {
   cancelaItem,
   renderizaFormAlteracao,
   enviaFormAtualizacao} = require('../controllers/pedidosController')
+  const methodOverride=require('method-override')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -29,6 +30,6 @@ router.get('/cancelaItem/:id/:idItem', cancelaItem)
 router.get('/cancelaPedido/:id', cancelaPedido)
 
 router.get('/alterarPedido/:id', renderizaFormAlteracao)
-router.post('/alteraFormAtu', enviaFormAtualizacao)
+router.post('/alteraFormAtu/:id', enviaFormAtualizacao)
 
 module.exports = router;
