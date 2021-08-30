@@ -93,11 +93,11 @@ module.exports.renderizaPedidos = (async (req, res, next) => {
 
 module.exports.cancelaPedido = (async (req, res, next) => {
     const id = req.params.id
-    /*await models.Pedidos.destroy({
+    await models.Pedidos.destroy({
         where: {
             id: id
         }
-    })*/
+    })
     await models.Pedidos_produtos.destroy({
         where: {
             pedidoId: id
