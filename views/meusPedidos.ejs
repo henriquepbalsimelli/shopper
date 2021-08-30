@@ -6,41 +6,109 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #divPai {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 1rem;
+            
+        }
+
+        #item {
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        #item2 {
+            margin: 0.5rem
+        }
+
+        #item3 {
+            margin: 0.5rem;
+            color: rgb(5, 179, 5)
+        }
+        #verProdutos{
+            margin: 0.3rem;
+            background-color: rgb(89, 89, 255);
+            color: cornsilk;
+            border: none;
+            border-radius: 1rem;
+            height: 2rem;
+            width: 20%;
+        }
+        #alterarPedido{
+            margin: 0.3rem;
+            background-color: rgb(244, 255, 89);
+            border: none;
+            border-radius: 1rem;
+            height: 2rem;
+            width: 20%;
+        }
+        #cancelarPedido{
+            margin: 0.3rem;
+            background-color: rgb(255, 100, 89);
+            border: none;
+            border-radius: 1rem;
+            height: 2rem;
+            width: 20%;
+        }
+        #infos{
+            width: 50%;
+        }
+        #botoes{
+            width:50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Seus pedidos</h1>
     <a href='/'>Voltar</a>
-    <ul>
+    <ul list-style='none' >
         <% for (const pedido of pedidos){%>
-            <li>
-                <div>
-                    <h3>Numero do pedido: <%=pedido.id%> </h3>
-                    
-                </div>
-                <div>
-                    <h3>Nome do cliente: <%=pedido.nomeCliente%></h3>
-                    
-                </div>
-                <div>
-                    <h3>Valor total do pedido: R$<%=pedido.total%></h3>
-                    
-                </div>
-                <div>
-                    <form method="GET" action='/meusPedidos/<%=pedido.id%>/itens'>
-                        <button type="submit">Ver produtos deste pedido</button>
-                    </form>
-                    <form method="GET" action='/cancelaPedido/<%=pedido.id%>'>
-                        <button type="submit">Cancelar pedido</button>
-                    </form>
-                    <form method="GET" action='/alterarPedido/<%=pedido.id%>'>
-                        <button type="submit">Alterar pedido</button>
-                    </form>
+            <div id='divPai'>
+                <li id='infos'>
+                    <div id='item'>
+                        <h3>Numero do pedido:</h3>
+                        <div id='item2'>
+                            <%=pedido.id%>
+                        </div>
+                    </div>
+                    <div id='item'>
+                        <h3>Nome do cliente:</h3>
+                        <div id='item2'>
+                            <%=pedido.nomeCliente%>
+                        </div>
+                    </div>
+                    <div id='item'>
+                        <h3>Valor total do pedido: </h3>
+                        <div id='item3'>R$ <%=pedido.total%>
+                        </div>
 
-                </div>
+                    </div>
+                 </li>  
+                     <div id='botoes'>
+                        <form method="GET" action='/meusPedidos/<%=pedido.id%>/itens'>
+                            <button id='verProdutos' type="submit">Ver produtos deste pedido</button>
+                        </form>
+                        <form method="GET" action='/alterarPedido/<%=pedido.id%>'>
+                            <button id = 'alterarPedido'type="submit">Alterar pedido</button>
+                        </form>
+                        <form method="GET" action='/cancelaPedido/<%=pedido.id%>'>
+                            <button id='cancelarPedido' type="submit">Cancelar pedido</button>
+                        </form>
 
-            </li>
-            <%}%>
+
+                    </div>
+
+               </div> 
+                <%}%>
+            
+
     </ul>
 </body>
 
