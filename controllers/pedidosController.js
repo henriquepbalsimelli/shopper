@@ -43,11 +43,19 @@ module.exports.enviaPedido = (async (req, res, next) => {
 
     let produtoId = req.body.produtoId
     let quantidade = req.body.quantidade
-    let pedidoId = parseInt(req.body.pedidoId)
+    
+
+
+    const nmrPedido = await models.Pedidos.findOne({
+        limit:1,
+        order: [['id', 'DESC']]
+    })
+    
+
 
     for (var i = 0; i < quantidade.length; i++) {
         models.Pedidos_produtos.create({
-            pedidoId: pedidoId,
+            pedidoId: nmrPedido.id,
             produtoId: produtoId[i],
             quantidade: quantidade[i]
         })
@@ -85,11 +93,11 @@ module.exports.renderizaPedidos = (async (req, res, next) => {
 
 module.exports.cancelaPedido = (async (req, res, next) => {
     const id = req.params.id
-    await models.Pedidos.destroy({
+    /*await models.Pedidos.destroy({
         where: {
             id: id
         }
-    })
+    })*/
     await models.Pedidos_produtos.destroy({
         where: {
             pedidoId: id
