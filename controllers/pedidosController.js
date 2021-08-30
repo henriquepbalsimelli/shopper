@@ -93,20 +93,29 @@ module.exports.renderizaPedidos = (async (req, res, next) => {
 
 module.exports.cancelaPedido = (async (req, res, next) => {
     const id = req.params.id
+    const pedidosProdutos = await models.Pedidos_produtos.findAll()
+
+    for( let i = 0; i < pedidosProdutos.length; i++){
+        await models.Produtos.increment({
+            qty_stock: pedidosProdutos[i].quantidade
+        },{
+            where:{
+                id: pedidosProdutos[i].produtoId
+            }
+        })
+    }
+
     await models.Pedidos.destroy({
         where: {
             id: id
         }
     })
+
     await models.Pedidos_produtos.destroy({
         where: {
             pedidoId: id
         }
     })
-
-
-
-
 
     res.redirect('/')
 
@@ -272,7 +281,7 @@ module.exports.cancelaItem = (async (req, res, next) => {
 
     const id = parseInt(req.params.id)
     const idItem = parseInt(req.params.idItem)
-    console.log(id,idItem)
+    
 
     const quantidadeItem = await models.Pedidos_produtos.findOne({
         where:
@@ -319,7 +328,7 @@ module.exports.cancelaItem = (async (req, res, next) => {
     })
 
     
-    console.log(quantidadeItem)
+    
     const valores = await models.Produtos.findAll({})
     const quantidades = []
     const precos = []
