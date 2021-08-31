@@ -14,55 +14,50 @@
             margin: 2rem
         }
     </style>
-    <title>Alterar Pedido</title>
+    <title>Document</title>
 </head>
 
 <body>
-    <form action='/alteraFormAtu/<%=infos.pedido.id%>' method="POST">
+    <form action='/alteraFormAtu/<%=pedido.id%>' method="POST">
         <div>
-            <label for='nome'> Nome cadastrado:
-                <input type="text" name='nomeCliente' id='nome' value='<%=infos.pedido.nomeCliente%>'>
+            <label for='nome'> Insira seu nome
+                <input type="text" name='nomeCliente' id='nome' value='<%=pedido.nomeCliente%>'>
             </label>
         </div>
         <div>
             <label for='dataDeEntrega'> Insira a data de entrega
-                <input type="date" name='dataDeEntrega' id='dataDeEntrega' value='<%=infos.pedido.dataDeEntrega%>'>
+                <input type="date" name='dataDeEntrega' id='dataDeEntrega'>
             </label>
         </div>
 
+        
 
-        <div>
-            <input type='number' name='pedidoId' value='<%=infos.pedido.id%>' readonly >
-        </div>
+                <button type="submit">Enviar pedido</button>
+                <h2>Selecione a quantidade desejada de cada produto</h2>
 
-        <button type="submit">Atualizar pedido</button>
-        <h2>Atualize seu pedido</h2>
-
-        <ul>
-            <%for (const infoItem of infosItens){%>
-                <div id='cardProduto'>
-                    <label for='produto'>
-                        <div id='produto'>
-                            <%=infoItem.produto.name%>
+                <ul>
+                    <%for (let i =0; i < infosItens.length; i++){%>
+                        <div id='cardProduto'>
+                            <label for='produto'>
+                                <div id='produto'>
+                                    <%=produtos[i].name%>
+                                </div>
+                                <input type="number" name='quantidade' id='<%=produtos[i].id%>' value="<%=infosItens[i].quantidade%>"
+                                    max='<%=produtos[i].qty_stock%>'></input>
+                                <input type="number" name='produtoId' id='id' value='<%=produtos[i].id%>'>
+                            </label>
+                            <div>
+                                Quantidade em estoque: <%=produtos[i].qty_stock%>
+                            </div>
+                            <div>
+                                Valor unitário: R$<%=produtos[i].price%>
+                                    <input type='number' name='preco' value='<%=produtos[i].price%>' readonly id='id'>
+                            </div>
                         </div>
-                        
-                        <input type="number" name='quantidade' id='<%=infoItem.produto.id%>' value="<%=infoItem.quantidade%>"
-                            max='<%=infoItem.produto.qty_stock%>'></input>
-                       
-                        <input type="number" name='produtoId' id='id' value='<%=infoItem.produto.id%>'>
-                    </label>
-                    <div>
-                        Quantidade em estoque: <%=infoItem.produto.qty_stock%>
-                    </div>
-                    <div>
-                        Valor unitário: R$<%=infoItem.produto.price%>
-                        <input type='number' name='preco' value='<%=infoItem.produto.price%>' readonly id='id'>
-                    </div>
-                </div>
-                
-                <%}%>
-        </ul>
-        <button type="submit">Enviar pedido</button>
+
+                        <%}%>
+                </ul>
+                <button type="submit">Enviar pedido</button>
     </form>
 </body>
 

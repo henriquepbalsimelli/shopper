@@ -123,47 +123,28 @@ module.exports.cancelaPedido = (async (req, res, next) => {
 
 module.exports.renderizaFormAlteracao = (async (req, res, next) => {
     const pedidoId = req.params.id
-    const infos = await models.Pedidos_produtos.findOne({
-        where: {
-            pedidoId: pedidoId
-        },
-        include: [{
-            association: 'produto',
-            trough: {
-                attributes: []
-            },
-        }, {
-            association: 'pedido',
-            trough: {
-                attributes: []
-            },
-        }]
-    })
+    
 
+    const produtos = await models.Produtos.findAll({})
+
+    const pedido = await models.Pedidos.findOne({
+        where: {
+            id: pedidoId
+        }
+    })
 
     const infosItens = await models.Pedidos_produtos.findAll({
         where: {
             pedidoId: pedidoId
-        },
-        include: [{
-            association: 'produto',
-            trough: {
-                attributes: []
-            },
-        }, {
-            association: 'pedido',
-            trough: {
-                attributes: []
-            },
-        }]
+        }
     })
 
-
+    
 
     res.render('formAlteracao', {
-
-        infos: infos,
-        infosItens: infosItens
+        infosItens: infosItens,
+        produtos:produtos,
+        pedido: pedido
     })
 })
 
@@ -178,23 +159,22 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     const produtoId = req.body.produtoId
     const quantidade = req.body.quantidade
 
-    //console.log(informacoes)
-    //console.log(informacoes)
+    const quantidadesDeRetorno = await models.Pedidos_produtos.findAll({
+        where: {
+            pedidoId: id
+        }
+    })
+    
     for (let i = 0; i < valores.length; i++) {
         const valorTotal = (parseFloat(req.body.preco[i])) * (parseFloat(req.body.quantidade[i]))
         numberList.push(parseFloat(valorTotal))
 
     }
     const total = numberList.reduce((total, currentElement) => total + currentElement)
-    //console.log(total)
 
-    const quantidadesDeRetorno = await models.Pedidos_produtos.findAll({
-        where: {
-            pedidoId: id
-        }
-    })
+    console.log(informacoes)
 
-    await models.Pedidos.update({
+     await models.Pedidos.update({
         nomeCliente: nomeCliente,
         dataDeEntrega: dataDeEntrega,
         total: total
@@ -205,21 +185,25 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
     })
 
 
-    for (var i = 0; i < quantidade.length; i++) {
+   for (var i = 0; i < quantidade.length; i++) {
         await models.Pedidos_produtos.update(
             {
-                pedidoId: parseInt(id[i]),
-                produtoId: parseInt(produtoId[i]),
-                quantidade: parseInt(quantidade[i])
+                pedidoId: id,
+                produtoId: produtoId[i],
+                quantidade: quantidade[i]
             },
             {
                 where: {
-                    pedidoId: parseInt(id)
+                    produtoId: parseInt(produtoId[i]),
+                    pedidoId: id
                 }
             }
 
 
         )
+
+
+        
 
         await models.Produtos.increment({
             qty_stock: quantidadesDeRetorno[i].quantidade
@@ -241,11 +225,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
     }
 
-    //const pedidosProdutos = models.Pedidos_produtos
-
-
-
-
+  
     res.redirect('/')
 
 })
