@@ -5,7 +5,6 @@ const models = require('../models');
 
 module.exports.renderizaFormAlteracao = (async (req, res, next) => {
     const pedidoId = req.params.id
-    
 
     const produtos = await models.Produtos.findAll({})
 
@@ -21,11 +20,9 @@ module.exports.renderizaFormAlteracao = (async (req, res, next) => {
         }
     })
 
-    
-
     res.render('formAlteracao', {
         infosItens: infosItens,
-        produtos:produtos,
+        produtos: produtos,
         pedido: pedido
     })
 })
@@ -46,17 +43,15 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
             pedidoId: id
         }
     })
-    
+
     for (let i = 0; i < valores.length; i++) {
         const valorTotal = (parseFloat(req.body.preco[i])) * (parseFloat(req.body.quantidade[i]))
         numberList.push(parseFloat(valorTotal))
-
     }
+
     const total = numberList.reduce((total, currentElement) => total + currentElement)
 
-    console.log(informacoes)
-
-     await models.Pedidos.update({
+    await models.Pedidos.update({
         nomeCliente: nomeCliente,
         dataDeEntrega: dataDeEntrega,
         total: total
@@ -66,8 +61,7 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
         }
     })
 
-
-   for (var i = 0; i < quantidade.length; i++) {
+    for (var i = 0; i < quantidade.length; i++) {
         await models.Pedidos_produtos.update(
             {
                 pedidoId: id,
@@ -84,9 +78,6 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
         )
 
-
-        
-
         await models.Produtos.increment({
             qty_stock: quantidadesDeRetorno[i].quantidade
         }, {
@@ -94,7 +85,6 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
                 id: produtoId[i]
             }
         })
-
 
         await models.Produtos.decrement({
             qty_stock: quantidade[i]
@@ -107,7 +97,6 @@ module.exports.enviaFormAtualizacao = (async (req, res, nex) => {
 
     }
 
-  
     res.redirect('/')
 
 })

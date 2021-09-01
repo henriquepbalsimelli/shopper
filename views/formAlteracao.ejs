@@ -21,12 +21,12 @@
     <form action='/alteraFormAtu/<%=pedido.id%>' method="POST">
         <div>
             <label for='nome'> Insira seu nome
-                <input type="text" name='nomeCliente' id='nome' value='<%=pedido.nomeCliente%>'>
+                <input type="text" name='nomeCliente' id='nome' value='<%=pedido.nomeCliente%>' required>
             </label>
         </div>
         <div>
             <label for='dataDeEntrega'> Insira a data de entrega
-                <input type="date" name='dataDeEntrega' id='dataDeEntrega'>
+                <input type="date" name='dataDeEntrega' id='dataDeEntrega' required>
             </label>
         </div>
 
@@ -43,7 +43,7 @@
                                     <%=produtos[i].name%>
                                 </div>
                                 <input type="number" name='quantidade' id='<%=produtos[i].id%>' value="<%=infosItens[i].quantidade%>"
-                                    max='<%=produtos[i].qty_stock%>'></input>
+                                    max='<%=produtos[i].qty_stock%>' required></input>
                                 <input type="number" name='produtoId' id='id' value='<%=produtos[i].id%>'>
                             </label>
                             <div>

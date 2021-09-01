@@ -6,9 +6,7 @@ const models = require('../models');
 module.exports.renderizaForm = (async (req, res, next) => {
     const produtos = await models.Produtos.findAll()
     const pedidos = await models.Pedidos.findAll()
-
-
-    const pedido = await models.Pedidos.findOne({
+    const ultimoPedido = await models.Pedidos.findOne({
         limit: 1,
         order: [['id', 'DESC']]
     })
@@ -17,7 +15,7 @@ module.exports.renderizaForm = (async (req, res, next) => {
     res.render('formCadastro', {
         produtos: produtos,
         pedidos: pedidos,
-        pedido: pedido
+        pedido: ultimoPedido
     })
 })
 
