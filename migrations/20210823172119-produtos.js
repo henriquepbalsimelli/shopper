@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
       },
       price: {
-        type: Sequelize.DATE
+        type: Sequelize.FLOAT
       },
       qty_stock: {
         type: Sequelize.INTEGER

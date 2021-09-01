@@ -1,16 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const {
-  renderizaForm, 
-  enviaPedido, 
-  renderizaPedidos, 
-  cancelaPedido, 
-  alteraPedido,
-  renderizaItensPedidos,
-  cancelaItem,
-  renderizaFormAlteracao,
-  enviaFormAtualizacao} = require('../controllers/pedidosController')
-  const methodOverride=require('method-override')
+const {renderizaForm, enviaPedido, renderizaPedidos} = require('../controllers/criacaoController')
+const {cancelaItem, cancelaPedido} = require('../controllers/cancelamentoController')
+const {renderizaItensPedidos, enviaFormAtualizacao, renderizaFormAlteracao} = require('../controllers/alteracaoController')
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
